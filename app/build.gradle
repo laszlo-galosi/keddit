@@ -1,0 +1,61 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply from: '../dependencies.gradle'
+
+android {
+  compileSdkVersion 23
+  buildToolsVersion "23.0.2"
+
+  defaultConfig {
+    applicationId "com.largerlife.kotlin.keddit"
+    minSdkVersion 16
+    targetSdkVersion 23
+    versionCode 1
+    versionName "1.0"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+  sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+  }
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+
+  //Rx related libraries
+  compile appBuildingDependencies.rxJava
+  compile appBuildingDependencies.rxLint
+  compile appBuildingDependencies.rxAndroid
+
+  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  //android support libraries
+  compile appBuildingDependencies.supportV7
+  //  compile appBuildingDependencies.supportV4
+  compile appBuildingDependencies.supportDesign
+  //  compile appBuildingDependencies.butterKnife
+  //  apt appBuildingDependencies.butterKnifeCompiler
+
+  //libraries on demand per project
+  compile appBuildingDependencies.trikitaLog
+  compile appBuildingDependencies.picasso
+
+  testCompile 'junit:junit:4.12'
+}
+buildscript {
+  ext.kotlin_version = '1.0.1-2'
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+repositories {
+  mavenCentral()
+}
